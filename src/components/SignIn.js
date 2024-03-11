@@ -2,8 +2,9 @@ import React, { useContext, useRef, useState, useEffect } from "react";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase-config"; 
+import { db } from "../firebase-config"; 
 import '../css/index.css';
+import Navbar from "./Navbar";
 
 const SignIn = () => {
   // const { signIn } = useContext(UserContext);
@@ -43,7 +44,7 @@ const SignIn = () => {
 
         if (docSnap.exists()) {
           const { role } = docSnap.data();
-          role === "seller" ? navigate("/private/private-home") : navigate("/private/private-buyer");
+          role === "seller" ? navigate("/sellers") : navigate("/");
         } else {
           console.log("Aucun document trouvé !");
         }
@@ -55,6 +56,7 @@ const SignIn = () => {
 
   return (
     <>
+    <Navbar/>
       <div className="signin-container">
         <h1>Connexion</h1>
         <form ref={formRef} onSubmit={handleForm} className="signin-form">

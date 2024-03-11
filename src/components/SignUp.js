@@ -1,11 +1,11 @@
-import React, { useContext, useRef, useState } from "react";
-import { UserContext } from "../context/userContext";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore"; 
-import { db } from "../firebase-config"; // Assurez-vous que db est bien configuré pour pointer sur votre instance Firestore
-import { createUserWithEmailAndPassword } from "firebase/auth"; // Import ajouté
-import { auth } from "../firebase-config"; // Assurez-vous que le chemin est correct
+import { db } from "../firebase-config"; 
+import { createUserWithEmailAndPassword } from "firebase/auth"; 
+import { auth } from "../firebase-config"; 
 import "../css/index.css";
+import Navbar from "./Navbar";
 
 const SignUp = () => {
   const signUp = async (email, pwd, role) => {
@@ -15,7 +15,7 @@ const SignUp = () => {
     
     // Stockage du rôle de l'utilisateur dans Firestore
     await setDoc(doc(db, "users", user.uid), {
-      email: email, // Stocker l'email peut être optionnel selon vos besoins de sécurité et de confidentialité
+      email: email, // stockahe de l'email
       role: role,
     });
   };
@@ -36,20 +36,20 @@ const SignUp = () => {
   const handleForm = async (e) => {
     e.preventDefault();
     
-    const role = inputs.current[0].value; // Assumons que c'est le troisième élément ajouté aux refs
+    const role = inputs.current[0].value; 
     const email = inputs.current[1].value;
     const password = inputs.current[2].value;
     
     if (password.length < 6) {
       setValidation("Le mot de passe doit contenir 6 caractères minimum");
       return;
-    } else if (password !== inputs.current[3].value) { // Assumons que c'est le quatrième élément pour la confirmation du mot de passe
+    } else if (password !== inputs.current[3].value) { 
       setValidation("Les mots de passe ne correspondent pas");
       return;
     }
   
     try {
-      await signUp(email, password, role); // Incluez le rôle ici
+      await signUp(email, password, role); // Inclure le rôle ici
       formRef.current.reset();
       setValidation("");
       // Redirection basée sur le rôle
@@ -63,36 +63,10 @@ const SignUp = () => {
     }
   };
 
-
-
-  // const handleForm = async (e) => {
-  //   e.preventDefault();
-  //   if (
-  //     (inputs.current[1].value.length || inputs.current[2].value.length) < 6
-  //   ) {
-  //     setValidation("Le mot de passe doit contenir 6 caractères minimum");
-  //     return;
-  //   } else if (inputs.current[1].value !== inputs.current[2].value) {
-  //     setValidation("Les mots de passe ne correspondent pas");
-  //     return;
-  //   }
-
-  //   try {
-  //     await signUp(inputs.current[0].value, inputs.current[1].value);
-  //     formRef.current.reset();
-  //     setValidation("");
-  //     navigate("/signin");
-  //   } catch (err) {
-  //     if (err.code === "auth/invalid-email") {
-  //       setValidation("Le format de l'email est invalide");
-  //     } else if (err.code === "auth/email-already-in-use") {
-  //       setValidation("L'utilisateur existe déjà");
-  //     }
-  //   }
-  // };
-
   return (
     <>
+        <Navbar/>
+
       <div className="signup-container">
         <h1>Inscription</h1>
         <form ref={formRef} onSubmit={handleForm} className="signup-form">

@@ -1,41 +1,33 @@
-import React, { useContext, useEffect } from 'react';
-import { CartContext } from '../context/cartContext';
+import React, { useContext } from 'react';
+import {CartContext} from "../context/cartContext";
+import Navbar from './Navbar';
 import { Icon } from 'react-icons-kit';
 import { ic_add } from 'react-icons-kit/md/ic_add';
 import { ic_remove } from 'react-icons-kit/md/ic_remove';
 import { iosTrashOutline } from 'react-icons-kit/ionicons/iosTrashOutline';
-import { Link, useNavigate } from 'react-router-dom'; // Utilisez useNavigate ici
-import { auth } from "../firebase-config";
+import { Link} from 'react-router-dom'; 
 import { UserContext } from '../context/userContext';
 import '../css/index.css';
-
 
 
 const Cart = ({ user }) => {
     const { currentUser } = useContext(UserContext);
 
     const { shoppingCart, dispatch, totalPrice, totalQty } = useContext(CartContext);
-    const navigate = useNavigate(); // Utilisez useNavigate au lieu de useHistory
-
-    useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (!user) {
-                navigate('/signin'); // Remplacez history.push par navigate
-            }
-        });
-    }, [navigate]); // Ajoutez navigate comme dépendance
 
     return (
         <>
+        <Navbar user={currentUser}/>
             <>
                 {shoppingCart.length !== 0 && <h1>Votre panier </h1>}
                 <div className='cart-container'>
                     {
                         shoppingCart.length === 0 && <>
                             <div>Votre panier est vide</div>
+                            <div><Link to="/"> Retourner aux articles</Link></div>
                         </>
                     }
-                    {shoppingCart.map(cart => (
+                    {shoppingCart && shoppingCart.map(cart => (
                         <div className='cart-card' key={cart.ProductID}>
 
                             <div className='cart-img'>
@@ -44,7 +36,7 @@ const Cart = ({ user }) => {
 
                             <div className='cart-name'>{cart.ProductName}</div>
 
-                            <div className='cart-price-orignal'>Rs {cart.ProductPrice}.00 $</div>
+                            <div className='cart-price-orignal'>PU {cart.ProductPrice}.00 </div>
 
                             <div className='inc' onClick={() => dispatch({ type: 'INC', id: cart.ProductID, cart })}>
                                 <Icon icon={ic_add} size={24} />
@@ -57,7 +49,7 @@ const Cart = ({ user }) => {
                             </div>
 
                             <div className='cart-price'>
-                                Prix: {cart.TotalProductPrice}.00 $
+                                Prix: {cart.TotalProductPrice}.00
                             </div>
 
                             <button className='delete-btn' onClick={() => dispatch({ type: 'DELETE', id: cart.ProductID, cart })}>

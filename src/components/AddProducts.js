@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { storage, db } from '../firebase-config';
-import { doc, setDoc } from 'firebase/firestore'; // Importez setDoc pour Firestore
+import { doc, setDoc } from 'firebase/firestore'; 
 import '../css/index.css';
 
 

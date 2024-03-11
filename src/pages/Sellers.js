@@ -1,17 +1,18 @@
 import React, { useEffect, useContext } from "react";
-import { UserContext } from "../context/userContext";
-import Products from "../components/Products";
 import Navbar from "../components/Navbar";
+import AddProducts from "../components/AddProducts";
 
-const Home = () => {
+import { UserContext } from "../context/userContext";
+
+const Sellers = () => {
   const { currentUser } = useContext(UserContext);
 
   return (
     <div className="wrapper">
       <Navbar user={currentUser} />
-      <Products />
+      <AddProducts />
     </div>
   );
 };
 
-export default Home;
+export default Sellers;

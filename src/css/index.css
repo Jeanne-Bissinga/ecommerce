@@ -45,6 +45,28 @@ body {
   color: #000; /* Couleur des liens au survol */
 }
 
+.navbar .relative{
+  position: relative;
+
+}
+
+.navbar .relative .no-of-products {
+  background: #f57224;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  position: absolute;
+  top: -5px;
+  left: -20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* inscription*/
 /* SignUp.css */
 h1 {
@@ -122,7 +144,9 @@ button:hover {
 }
 
 /*products*/
-
+.container h2{
+  padding: 50px 0;
+}
 .products-container {
   display: flex;
   justify-content: center;
@@ -312,3 +336,4 @@ button:hover {
 .success-msg .home-link {
   color: #fff;
 }
+
