@@ -8,19 +8,17 @@ import { auth, db } from "./firebase-config";
 import React, { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Sellers from "./pages/Sellers";
+import { doc, getDoc } from "firebase/firestore";
 
 function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const authListener = auth.onAuthStateChanged((user) => {
+    const authListener = auth.onAuthStateChanged(async(user) => {
       if (user) {
-        db.collection("users")
-          .doc(user.uid)
-          .get()
-          .then((snapshot) => {
-            setUser(snapshot.data().email);
-          });
+        const refCollection = doc(db, "users", user.uid);
+        const snapshot = await getDoc(refCollection, user.uid)
+        setUser(snapshot.data().email) 
       } else {
         setUser(null);
       }
